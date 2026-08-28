@@ -1,5 +1,7 @@
+import 'dotenv/config';
 import * as url from 'url';
 import express from 'express';
+import session from 'express-session';
 import AdminJS, { ComponentLoader } from 'adminjs';
 import AdminJSExpress from '@adminjs/express';
 import { Database, Resource } from '@adminjs/prisma';
@@ -286,7 +288,26 @@ const Components = {
     rootPath: '/admin',
   });
 
-  const adminRouter = AdminJSExpress.buildRouter(admin);
+  const DEFAULT_ADMIN = {
+    email: process.env.ADMIN_EMAIL || 'admin@example.com',
+    password: process.env.ADMIN_PASSWORD || 'password123',
+  };
+
+  const adminRouter = AdminJSExpress.buildAuthenticatedRouter(admin, {
+    authenticate: async (email, password) => {
+      if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
+        return DEFAULT_ADMIN;
+      }
+      return null;
+    },
+    cookieName: 'adminjs',
+    cookiePassword: process.env.COOKIE_PASSWORD || 'rotaract-kirtipur-super-secret-cookie-password-change-this',
+  }, null, {
+    resave: false,
+    saveUninitialized: true,
+    secret: process.env.COOKIE_PASSWORD || 'rotaract-kirtipur-super-secret-cookie-password-change-this',
+  });
+
   app.use(admin.options.rootPath, adminRouter);
   
   if (process.env.NODE_ENV !== 'production') {
