@@ -277,6 +277,9 @@ const Components = {
             FamilyClub: 'Family Club',
             'Rotary Family': 'Rotary Family',
             ContactMessage: 'Inbox (Contact Form)'
+          },
+          messages: {
+            loginWelcome: 'Welcome to the Rotaract Club of Kirtipur Admin Panel. Securely manage your club\'s website, community projects, events, and members all in one place.'
           }
         }
       }
