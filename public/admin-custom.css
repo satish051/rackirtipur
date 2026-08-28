@@ -1,0 +1,10 @@
+nav[data-css="sidebar"] img,
+section[data-css="sidebar"] img,
+a[data-css="sidebar-logo"] img,
+div[data-css="sidebar-logo"] img,
+[data-css="sidebar"] a img,
+img[alt="Rotaract Kirtipur"] {
+    max-height: 80px !important;
+    height: 80px !important;
+    margin-top: 20px !important;
+}

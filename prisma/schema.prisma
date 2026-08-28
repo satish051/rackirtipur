@@ -1,0 +1,138 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Project {
+  id               Int      @id @default(autoincrement())
+  title            String
+  category         String
+  tagColorClass    String   @default("bg-rota-cranberry text-white")
+  imageUrl         String
+  shortDescription String
+  modalId          String?
+  detailedInfo     String?
+  createdAt        DateTime @default(now())
+}
+
+model Stat {
+  id         Int     @id @default(autoincrement())
+  key        String
+  value      String
+  iconSvg    String
+  iconColor  String  @default("text-rota-cranberry")
+  iconBg     String  @default("bg-rota-cranberry/10")
+  plusColor  String  @default("text-rota-gold")
+  modalId    String?
+  hoverHint  String?
+}
+
+model Testimonial {
+  id             Int     @id @default(autoincrement())
+  quote          String
+  authorName     String
+  authorTitle    String
+  authorInitials String?
+}
+
+model Member {
+  id                   Int      @id @default(autoincrement())
+  name                 String
+  role                 String
+  image                String?
+  isBoardMember        Boolean  @default(false)
+  isExecutiveOfficer   Boolean  @default(false)
+  vision               String?
+  email                String?
+  phone                String?
+  receiveNotifications Boolean  @default(true) // For Event notifications!
+}
+
+model NoticePopup {
+  id        Int      @id @default(autoincrement())
+  imageUrl  String
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model ClubInfo {
+  id                     Int      @id @default(autoincrement())
+  addressName            String
+  addressLine            String
+  meetingTime            String
+  email                  String
+  facebookUrl            String?
+  instagramUrl           String?
+  tiktokUrl              String?
+  linkedinUrl            String?
+  heroBackgroundImageUrl String?
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String
+  date        DateTime
+  location    String?
+  description String?
+  type        String   @default("Meeting") 
+  imageUrl    String?  
+  rsvpLink    String?  
+}
+
+model GalleryCard {
+  id          Int      @id @default(autoincrement())
+  title       String
+  subtitle    String
+  imageUrl    String
+  themeColor  String   @default("cranberry") // cranberry, gold, or blue
+  flipDirection String @default("right") // right, left, or up
+  order       Int      @default(0)
+}
+
+model FamilyClub {
+  id               Int      @id @default(autoincrement())
+  type             String   @unique
+  name             String
+  sponsor          String
+  clubId           String
+  charterDate      String
+  logoUrl          String?
+  description      String?
+  modalDescription String?
+  modalFocus       String?
+  modalBadge       String?
+  isActive         Boolean  @default(true)
+  link             String?
+}
+
+model EmailConfig {
+  id           Int      @id @default(autoincrement())
+  emailAddress String
+  appPassword  String
+  smtpHost     String   @default("smtp.gmail.com")
+  smtpPort     Int      @default(465)
+  isConfigured Boolean  @default(true)
+}
+
+model BulkEmail {
+  id        Int      @id @default(autoincrement())
+  subject   String
+  body      String
+  sentAt    DateTime @default(now())
+  sentTo    Int      @default(0)
+}
+
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
