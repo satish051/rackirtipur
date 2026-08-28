@@ -307,7 +307,8 @@ const Components = {
       const config = await prisma.emailConfig.findFirst();
       
       if (!config || !config.emailAddress || !config.appPassword) {
-        return res.status(500).json({ error: 'Email system is not configured yet.' });
+        console.warn('Email system is not configured yet. Message saved to DB only.');
+        return res.status(200).json({ success: true, message: 'Message saved successfully (Email not configured).' });
       }
 
       const transporter = nodemailer.createTransport({
