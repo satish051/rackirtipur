@@ -22,8 +22,7 @@ const start = async () => {
   const app = express();
   
   app.set('view engine', 'ejs');
-  app.use(express.urlencoded({ extended: true }));
-  app.use(express.json());
+
   app.use(express.static('public'));
 
   
@@ -313,6 +312,10 @@ const Components = {
   if (process.env.NODE_ENV !== 'production') {
     admin.watch();
   }
+
+  // Body parsers go AFTER AdminJS router to avoid conflicts with express-formidable
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json());
 
   // Main route
   
