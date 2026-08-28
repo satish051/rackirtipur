@@ -19,7 +19,20 @@ if (dbUrl && dbUrl.startsWith('file:')) {
     const initDbPath = path.join(__dirname, 'init.db');
     
     if (fs.existsSync(initDbPath)) {
+        let shouldCopy = false;
+        
         if (!fs.existsSync(targetPath)) {
+            shouldCopy = true;
+        } else {
+            const stats = fs.statSync(targetPath);
+            // If the database is under 25KB, it's just an empty schema from db push
+            if (stats.size < 25000) {
+                console.log('Existing database appears empty. Overwriting with initial data...');
+                shouldCopy = true;
+            }
+        }
+        
+        if (shouldCopy) {
             console.log(`Copying initial database to persistent disk at ${targetPath}...`);
             
             // Ensure target directory exists
@@ -31,7 +44,7 @@ if (dbUrl && dbUrl.startsWith('file:')) {
             fs.copyFileSync(initDbPath, targetPath);
             console.log('Database copied successfully!');
         } else {
-            console.log(`Persistent database already exists at ${targetPath}. Skipping copy.`);
+            console.log(`Persistent database already exists with data at ${targetPath}. Skipping copy.`);
         }
     } else {
         console.log('No init.db found to copy.');
