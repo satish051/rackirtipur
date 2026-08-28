@@ -26,9 +26,10 @@ if (dbUrl && dbUrl.startsWith('file:')) {
             shouldCopy = true;
         } else {
             const stats = fs.statSync(targetPath);
-            // If the database is under 25KB, it's just an empty schema from db push
-            if (stats.size < 25000) {
-                console.log('Existing database appears empty. Overwriting with initial data...');
+            const initStats = fs.statSync(initDbPath);
+            // If the database is significantly smaller than the seed (empty schema) OR we force it
+            if (stats.size < 50000 || process.env.FORCE_DB_RESET === 'true' || process.env.FORCE_DB_RESET === '1') {
+                console.log('Existing database is empty or FORCE_DB_RESET is set. Overwriting with initial data...');
                 shouldCopy = true;
             }
         }
