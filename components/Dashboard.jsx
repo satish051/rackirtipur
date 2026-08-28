@@ -39,8 +39,11 @@ const Dashboard = () => {
       >
         <Box>
           <H2 style={{ color: 'white', marginBottom: '10px' }}>Welcome to Rotaract Kirtipur Admin Panel</H2>
-          <Text style={{ fontSize: '16px', opacity: 0.9 }}>
+          <Text style={{ fontSize: '16px', opacity: 0.9, marginBottom: '10px' }}>
             Manage your club's website, events, members, and communications all from one place.
+          </Text>
+          <Text style={{ fontSize: '14px', opacity: 0.8 }}>
+            If any issues, contact <a href="https://satishchandrakarki.com.np/" target="_blank" rel="noopener noreferrer" style={{ color: '#fbd1dd', textDecoration: 'underline' }}>Satish Chandra Karki</a>.
           </Text>
         </Box>
         <Box style={{ display: 'flex', gap: '15px' }}>
